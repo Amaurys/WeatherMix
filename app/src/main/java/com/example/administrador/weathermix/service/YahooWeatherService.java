@@ -30,12 +30,13 @@ public class YahooWeatherService {
         return location;
     }
 
-    public void refreshWeather(final String location){
+    public void refreshWeather(String l){
+        this.location = l;
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... strings) {
 
-                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"$s\")", location);
+                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\")and u='c'", strings[0]);
                 String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
 
                 try {
@@ -77,7 +78,7 @@ public class YahooWeatherService {
                     }
 
                     Channel channel = new Channel();
-                    channel.populate(queryResults.optJSONObject("result").optJSONObject("channel"));
+                    channel.populate(queryResults.optJSONObject("results").optJSONObject("channel"));
 
                     callback.serviceSuccess(channel);
                 } catch (JSONException e) {
