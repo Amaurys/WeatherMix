@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements WeatherServiceCal
         locationTextView = (TextView) findViewById(R.id.locationTextView);
 
         service = new YahooWeatherService(this);
-        service.refreshWeather("santo domingo, dominican republic");
+        service.refreshWeather("Santo DOmingo, Dominican Republic");
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading... ");
